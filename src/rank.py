@@ -220,8 +220,8 @@ def write_submission(
         by=["_score", "candidate_id"], ascending=[False, True]
     ).reset_index(drop=True)
 
-    # Assign ranks 1-100
-    result["rank"] = range(1, TOP_N + 1)
+    # Assign ranks 1-N (graceful degradation for small <100 pools in sandbox)
+    result["rank"] = range(1, len(result) + 1)
 
     # Normalise scores to be strictly non-increasing
     # (small epsilon to handle floating point ties)
@@ -237,8 +237,8 @@ def write_submission(
     reasoning_texts = compose_reasoning_batch(rows_for_reasoning, ranks_for_reasoning)
     result["reasoning"] = reasoning_texts
 
-    # Validate column count before writing
-    assert len(result) == TOP_N, f"Expected {TOP_N} rows, got {len(result)}"
+    # Validate row count before writing
+    assert len(result) <= TOP_N, f"Expected up to {TOP_N} rows, got {len(result)}"
 
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     with open(out_path, "w", newline="", encoding="utf-8") as f:
@@ -334,8 +334,10 @@ def main():
 
     if len(eligible) < TOP_N:
         print(f"  WARNING: Only {len(eligible)} eligible candidates — padding from excluded pool")
-        excluded = df[final_scores <= 0.0].nlargest(TOP_N - len(eligible), "base_score")
-        eligible = pd.concat([eligible, excluded])
+        # Fallback padding: strictly exclude honeypots from being padded back in
+        excluded = df[(final_scores <= 0.0) & (~df["is_honeypot"])].nlargest(TOP_N - len(eligible), "base_score")
+        if not excluded.empty:
+            eligible = pd.concat([eligible, excluded])
 
     top100 = eligible.nlargest(TOP_N, "final_score")
 
