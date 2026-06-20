@@ -104,6 +104,16 @@ SEO_NEGATIVE_PATTERNS = [
     re.compile(r'\bblog post\b')
 ]
 
+CV_TERMS = {"computer vision", "object detection", "image segmentation",
+            "speech recognition", "asr", "tts", "robotics", "ros", "slam"}
+NLP_TERMS = {"nlp", "natural language", "ranking", "retrieval", "search",
+             "recommendation", "information retrieval", "text classification"}
+LANGCHAIN_KWS = {"langchain", "llamaindex", "llama index", "openai api", "chatgpt api"}
+
+_CV_PATTERNS = [re.compile(r'\b' + re.escape(w) + r'\b') for w in CV_TERMS]
+_NLP_PATTERNS = [re.compile(r'\b' + re.escape(w) + r'\b') for w in NLP_TERMS]
+_LANGCHAIN_PATTERNS = [re.compile(r'\b' + re.escape(w) + r'\b') for w in LANGCHAIN_KWS]
+
 PROFICIENCY_WEIGHT = {"beginner": 0.25, "intermediate": 0.55, "advanced": 0.80, "expert": 1.00}
 
 LOCATION_SCORES = {
@@ -376,8 +386,8 @@ def compute_trajectory(
 
     # ── Research-only flag ────────────────────────────────────────────────
     all_desc = " ".join(r.get("description", "") or "" for r in career_history).lower()
-    research_count = _count_matches(all_desc, RESEARCH_WORDS)
-    prod_count = _count_matches(all_desc, PRODUCTION_WORDS)
+    research_count = _count_matches(all_desc, _RESEARCH_PATTERNS)
+    prod_count = _count_matches(all_desc, _PROD_PATTERNS)
     research_only = research_count >= 3 and prod_count == 0
 
     # ── Aggregate trajectory score ────────────────────────────────────────
@@ -459,17 +469,13 @@ def compute_disqualifier_penalty(
         [r.get("description", "") or "" for r in career_history]
         + [summary or ""]
     ).lower()
-    cv_terms = {"computer vision", "object detection", "image segmentation",
-                "speech recognition", "asr", "tts", "robotics", "ros", "slam"}
-    nlp_terms = {"nlp", "natural language", "ranking", "retrieval", "search",
-                 "recommendation", "information retrieval", "text classification"}
-    has_cv_only = _contains_any(all_text, cv_terms) and not _contains_any(all_text, nlp_terms)
+    
+    has_cv_only = _contains_any(all_text, _CV_PATTERNS) and not _contains_any(all_text, _NLP_PATTERNS)
     if has_cv_only:
         penalty *= 0.45
 
     # LangChain-only + very low YOE
-    langchain_kws = {"langchain", "llamaindex", "llama index", "openai api", "chatgpt api"}
-    if _contains_any(all_text, langchain_kws) and yoe < 2.0:
+    if _contains_any(all_text, _LANGCHAIN_PATTERNS) and yoe < 2.0:
         penalty *= 0.35
 
     return round(max(0.0, min(penalty, 1.0)), 4)
