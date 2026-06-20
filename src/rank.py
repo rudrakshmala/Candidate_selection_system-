@@ -44,8 +44,8 @@ from src.reasoning.compose_reasoning import compose_reasoning_batch
 # ── Constants ─────────────────────────────────────────────────────────────────
 TOP_N = 100
 SCORE_WEIGHTS = {
-    "skill_evidence": 0.35,
-    "domain_fit":     0.30,
+    "skill_evidence": 0.30,
+    "domain_fit":     0.35,
     "trajectory":     0.15,
     "embedding_sim":  0.10,
     "location_fit":   0.10,
