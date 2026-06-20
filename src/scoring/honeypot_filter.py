@@ -53,27 +53,33 @@ def check_honeypot(candidate: dict[str, Any]) -> dict[str, Any]:
     salary: dict = signals.get("expected_salary_range_inr_lpa", {})
 
     # ── H1: Skill duration exceeds total experience ────────────────────────
-    h1_triggered = False
+    # Relaxed: skill duration more than 2x total experience + 24mo buffer
+    h1_extreme = False
+    h1_soft = False
     for sk in skills:
         skill_name = sk.get("name", "?")
         sk_dur = sk.get("duration_months", 0) or 0
-        if sk_dur > yoe_months + SKILL_DURATION_BUFFER:
-            flags.append(
-                f"H1: skill '{skill_name}' duration={sk_dur}mo "
-                f"> yoe_months={yoe_months:.0f}+{SKILL_DURATION_BUFFER}"
-            )
-            h1_triggered = True
-    if h1_triggered:
-        score_components.append(0.9)
+        if sk_dur > yoe_months * 2 + 24:
+            flags.append(f"H1-extreme: skill '{skill_name}' duration={sk_dur}mo > 2x YOE ({yoe_months}mo) + 24")
+            h1_extreme = True
+        elif sk_dur > yoe_months + 48:
+            flags.append(f"H1-soft: skill '{skill_name}' duration={sk_dur}mo > YOE ({yoe_months}mo) + 48")
+            h1_soft = True
+            
+    if h1_extreme:
+        score_components.append(0.8)
+    elif h1_soft:
+        score_components.append(0.25)
 
     # ── H2: Salary range inverted (min > max) ─────────────────────────────
+    # Common data entry error (19% of candidates), so reduced to very soft penalty
     sal_min = salary.get("min", 0.0)
     sal_max = salary.get("max", 0.0)
     if sal_min > 0 and sal_max > 0 and sal_min > sal_max:
         flags.append(
             f"H2: salary min={sal_min} > max={sal_max} (inverted range)"
         )
-        score_components.append(0.8)
+        score_components.append(0.15)
 
     # ── H3: 'expert' with near-zero evidence and no assessment score ───────
     h3_count = 0
