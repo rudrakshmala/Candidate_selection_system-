@@ -59,4 +59,4 @@ key_design_decisions:
   - "consulting penalty 0.0 for entire career at named firms; 0.75 for single role only"
   - "reasoning is rule-based with 8 branching templates, honestly surfaces concerns"
 
-sandbox_url: null    # Fill with HuggingFace Spaces / Streamlit Cloud URL
+sandbox_url: "https://715ab38200aad7981d.gradio.live"
