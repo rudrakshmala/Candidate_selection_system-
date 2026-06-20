@@ -68,20 +68,19 @@ CONSULTING_FIRMS = {
 
 PRODUCTION_WORDS = {
     "shipped", "deployed", "deployment", "production", "prod",
-    "launched", "launch", "scaled", "scale", "served", "serving",
-    "real users", "at scale", "built", "built and", "owned",
-    "maintained", "maintained and", "led development", "developed and",
-    "inference", "pipeline", "mlops",
+    "launched", "launch", "scaled", "serving", "serving infrastructure",
+    "real users", "at scale", "maintained and", "led development", "developed and",
+    "inference pipeline", "mlops", "built a ranking", "deployed model"
 }
 
 DOMAIN_WORDS = {
     "search", "ranking", "ranker", "retrieval", "recommendation",
-    "recommender", "embeddings", "embedding", "vector", "semantic",
-    "reranking", "rerank", "re-rank", "llm", "rag", "fine-tun",
+    "recommender", "embeddings", "embedding", "semantic search", "vector search",
+    "reranking", "rerank", "re-rank", "llm", "rag", "fine-tune", "fine-tuning",
     "ndcg", "mrr", "a/b test", "ab test", "information retrieval",
-    "candidate matching", "job matching", "talent",
+    "candidate matching", "job matching",
     "hybrid search", "dense retrieval", "sparse retrieval",
-    "bert", "transformer", "sentence-transformer",
+    "bert", "transformer", "sentence transformers", "sentence-transformers"
 }
 
 RESEARCH_WORDS = {
@@ -90,6 +89,20 @@ RESEARCH_WORDS = {
     "research scientist", "research engineer", "ablation",
     "state of the art", "sota", "benchmark dataset",
 }
+
+# Pre-compile regex patterns with word boundaries
+_PROD_PATTERNS = [re.compile(r'\b' + re.escape(w) + r'\b') for w in PRODUCTION_WORDS]
+_DOMAIN_PATTERNS = [re.compile(r'\b' + re.escape(w) + r'\b') for w in DOMAIN_WORDS]
+_RESEARCH_PATTERNS = [re.compile(r'\b' + re.escape(w) + r'\b') for w in RESEARCH_WORDS]
+
+SEO_NEGATIVE_PATTERNS = [
+    re.compile(r'\bsearch engine optimization\b'),
+    re.compile(r'\bseo\b'),
+    re.compile(r'\bfirst page\b'),
+    re.compile(r'\bgoogle ranking\b'),
+    re.compile(r'\bkeyword\b'),
+    re.compile(r'\bblog post\b')
+]
 
 PROFICIENCY_WEIGHT = {"beginner": 0.25, "intermediate": 0.55, "advanced": 0.80, "expert": 1.00}
 
@@ -124,14 +137,14 @@ def _lower(s) -> str:
     return str(s).lower().strip() if s else ""
 
 
-def _contains_any(text: str, word_set: set) -> bool:
+def _contains_any(text: str, compiled_patterns: list[re.Pattern]) -> bool:
     tl = text.lower()
-    return any(w in tl for w in word_set)
+    return any(p.search(tl) for p in compiled_patterns)
 
 
-def _count_matches(text: str, word_set: set) -> int:
+def _count_matches(text: str, compiled_patterns: list[re.Pattern]) -> int:
     tl = text.lower()
-    return sum(1 for w in word_set if w in tl)
+    return sum(1 for p in compiled_patterns if p.search(tl))
 
 
 # ── Skill Evidence Score ──────────────────────────────────────────────────────
@@ -239,9 +252,17 @@ def compute_domain_fit(career_history: list, current_title: str, summary: str) -
         + [summary or ""]
     ).lower()
 
-    prod_count = _count_matches(all_text, PRODUCTION_WORDS)
-    domain_count = _count_matches(all_text, DOMAIN_WORDS)
-    research_count = _count_matches(all_text, RESEARCH_WORDS)
+    # Negative context guard for SEO false positives
+    has_seo_context = any(p.search(all_text) for p in SEO_NEGATIVE_PATTERNS)
+    
+    prod_count = _count_matches(all_text, _PROD_PATTERNS)
+    domain_count = _count_matches(all_text, _DOMAIN_PATTERNS)
+    research_count = _count_matches(all_text, _RESEARCH_PATTERNS)
+
+    # If it looks like SEO and the title is non-technical, aggressively zero the domain count
+    # Since "search" and "ranking" are in DOMAIN_WORDS
+    if has_seo_context and is_non_tech_title:
+        domain_count = 0
 
     # Penalty for non-tech title with zero domain signal
     if is_non_tech_title and domain_count == 0:
