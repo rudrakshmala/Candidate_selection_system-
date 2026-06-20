@@ -153,6 +153,19 @@ def compose_reasoning(row: dict, rank: int) -> str:
     concern = _concern_str(row)
 
     # ── Template selection logic ────────────────────────────────────────────
+    # T0: Top Pick (Rank 1 specifically highlighted)
+    if rank == 1:
+        dominant_str = "exceptional domain fit"
+        if skill_score > domain_fit + 0.15:
+            dominant_str = "exceptional core skill evidence"
+        elif traj_score > domain_fit + 0.15 and traj_score > skill_score:
+            dominant_str = "an exceptional career trajectory"
+            
+        base = f"Top Pick: {_yoe_str(yoe)}, {dominant_str}."
+        if concern:
+            return f"{base} {title} with {_skill_strength_str(skill_score)}. Note: {concern}."
+        return f"{base} {title} offering {_domain_strength_str(domain_fit)} and {_skill_strength_str(skill_score)}. {_notice_str(notice).capitalize()}."
+
     # T1: High domain fit + high skill score (ideal fit)
     if domain_fit >= 0.65 and skill_score >= 0.55:
         if concern:
