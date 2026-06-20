@@ -1,0 +1,62 @@
+# Submission metadata — fill before portal submission
+# Spec §10.3 required fields
+
+participant_id: "YOUR_REGISTERED_ID"          # Replace with your actual ID
+team_name: "YOUR_TEAM_NAME"
+submission_file: "submission.csv"
+
+# ── Pre-computation declaration ────────────────────────────────────────────────
+pre_computation_required: true
+pre_computation_steps:
+  - name: "build_skill_taxonomy"
+    command: "python src/precompute/build_skill_taxonomy.py --candidates data/candidates.jsonl --jd job_requirements.yaml --out artifacts/skill_taxonomy.json"
+    estimated_time_minutes: 3
+    required: true
+
+  - name: "engineer_features"
+    command: "python src/precompute/engineer_features.py --candidates data/candidates.jsonl --taxonomy artifacts/skill_taxonomy.json --jd job_requirements.yaml --out artifacts/features.parquet"
+    estimated_time_minutes: 8
+    required: true
+
+  - name: "compute_embeddings"
+    command: "python src/precompute/compute_embeddings.py --candidates data/candidates.jsonl --out-dir artifacts/"
+    estimated_time_minutes: 25
+    required: false
+    notes: "Requires sentence-transformers. Adds 0.10 weight embedding axis. rank.py falls back gracefully if absent."
+
+  - name: "train_reranker"
+    command: "python src/precompute/train_reranker.py --features artifacts/features.parquet --out artifacts/reranker_model.txt"
+    estimated_time_minutes: 4
+    required: false
+    notes: "Requires lightgbm. Blends 70% rule-based + 30% learned. rank.py falls back gracefully if absent."
+
+# ── Ranking step declaration ───────────────────────────────────────────────────
+ranking_command: "python src/rank.py --candidates data/candidates.jsonl --features artifacts/features.parquet --out submission.csv"
+ranking_time_minutes_measured: null          # Fill after timed test run
+ranking_memory_gb_measured: null             # Fill after profiling
+ranking_uses_gpu: false
+ranking_makes_network_calls: false
+
+# ── Architecture summary ───────────────────────────────────────────────────────
+architecture_notes: >
+  Three-stage pipeline. Stage A: JD hand-encoded to job_requirements.yaml
+  (human-reviewed, every weight defensible). Stage B: offline feature
+  engineering — vectorised skill evidence scoring (anti-keyword-stuffing via
+  proficiency + duration + endorsements + platform assessment scores),
+  domain fit from career_history description text (the JD's stated decisive
+  signal), trajectory analysis (consulting flag, title-chaser, research-only),
+  honeypot detection, behavioral multiplier. Optional: bge-small-en-v1.5
+  embeddings and LightGBM lambdarank re-ranker. Stage C: rank.py loads cached
+  artifacts only, scores 100k in seconds (vectorised), hard-gates honeypots
+  and consulting disqualifiers, generates branching reasoning text, writes
+  submission.csv.
+
+key_design_decisions:
+  - "domain_fit_score weighted 0.30 — career descriptions, not skills array, is the JD's stated signal"
+  - "skill_evidence_score uses assessment scores (platform-objective) > proficiency > duration to resist keyword stuffing"
+  - "honeypot hard gate: score=0, never in top-100 regardless of other signals"
+  - "behavioral multiplier 0.30-1.00 — down-weights inactive candidates without zeroing strong fits"
+  - "consulting penalty 0.0 for entire career at named firms; 0.75 for single role only"
+  - "reasoning is rule-based with 8 branching templates, honestly surfaces concerns"
+
+sandbox_url: null    # Fill with HuggingFace Spaces / Streamlit Cloud URL

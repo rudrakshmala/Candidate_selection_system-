@@ -1,0 +1,710 @@
+{
+  "HTML": {
+    "normalized": "html",
+    "categories": [],
+    "frequency": 12246
+  },
+  "Databricks": {
+    "normalized": "databricks",
+    "categories": [],
+    "frequency": 12244
+  },
+  "Redux": {
+    "normalized": "redux",
+    "categories": [],
+    "frequency": 12222
+  },
+  "Terraform": {
+    "normalized": "terraform",
+    "categories": [],
+    "frequency": 12187
+  },
+  "Angular": {
+    "normalized": "angular",
+    "categories": [],
+    "frequency": 12173
+  },
+  "Figma": {
+    "normalized": "figma",
+    "categories": [],
+    "frequency": 12157
+  },
+  "Salesforce CRM": {
+    "normalized": "salesforce crm",
+    "categories": [],
+    "frequency": 12157
+  },
+  "Vue.js": {
+    "normalized": "vue.js",
+    "categories": [],
+    "frequency": 12142
+  },
+  "Sales": {
+    "normalized": "sales",
+    "categories": [],
+    "frequency": 12138
+  },
+  "Accounting": {
+    "normalized": "accounting",
+    "categories": [],
+    "frequency": 12136
+  },
+  "Agile": {
+    "normalized": "agile",
+    "categories": [],
+    "frequency": 12135
+  },
+  "Kafka": {
+    "normalized": "kafka",
+    "categories": [
+      "distributed_systems"
+    ],
+    "frequency": 12114
+  },
+  "Excel": {
+    "normalized": "excel",
+    "categories": [],
+    "frequency": 12109
+  },
+  "BigQuery": {
+    "normalized": "bigquery",
+    "categories": [],
+    "frequency": 12108
+  },
+  "CI/CD": {
+    "normalized": "ci/cd",
+    "categories": [],
+    "frequency": 12108
+  },
+  "Project Management": {
+    "normalized": "project management",
+    "categories": [],
+    "frequency": 12106
+  },
+  "Airflow": {
+    "normalized": "airflow",
+    "categories": [],
+    "frequency": 12105
+  },
+  "AWS": {
+    "normalized": "aws",
+    "categories": [],
+    "frequency": 12104
+  },
+  "Flask": {
+    "normalized": "flask",
+    "categories": [],
+    "frequency": 12104
+  },
+  "Scrum": {
+    "normalized": "scrum",
+    "categories": [],
+    "frequency": 12083
+  },
+  "Illustrator": {
+    "normalized": "illustrator",
+    "categories": [],
+    "frequency": 12072
+  },
+  "Kubernetes": {
+    "normalized": "kubernetes",
+    "categories": [
+      "distributed_systems"
+    ],
+    "frequency": 12071
+  },
+  "ETL": {
+    "normalized": "etl",
+    "categories": [],
+    "frequency": 12068
+  },
+  "CSS": {
+    "normalized": "css",
+    "categories": [],
+    "frequency": 12065
+  },
+  "Docker": {
+    "normalized": "docker",
+    "categories": [],
+    "frequency": 12062
+  },
+  "Next.js": {
+    "normalized": "next.js",
+    "categories": [],
+    "frequency": 12058
+  },
+  "Apache Beam": {
+    "normalized": "apache beam",
+    "categories": [],
+    "frequency": 12054
+  },
+  "Java": {
+    "normalized": "java",
+    "categories": [],
+    "frequency": 12049
+  },
+  "Go": {
+    "normalized": "go",
+    "categories": [],
+    "frequency": 12049
+  },
+  "TypeScript": {
+    "normalized": "typescript",
+    "categories": [],
+    "frequency": 12048
+  },
+  "JavaScript": {
+    "normalized": "javascript",
+    "categories": [],
+    "frequency": 12047
+  },
+  "dbt": {
+    "normalized": "dbt",
+    "categories": [],
+    "frequency": 12046
+  },
+  "REST APIs": {
+    "normalized": "rest apis",
+    "categories": [],
+    "frequency": 12040
+  },
+  "Spark": {
+    "normalized": "spark",
+    "categories": [
+      "distributed_systems"
+    ],
+    "frequency": 12038
+  },
+  "Marketing": {
+    "normalized": "marketing",
+    "categories": [],
+    "frequency": 12037
+  },
+  "Tally": {
+    "normalized": "tally",
+    "categories": [],
+    "frequency": 12030
+  },
+  "GraphQL": {
+    "normalized": "graphql",
+    "categories": [],
+    "frequency": 12027
+  },
+  "Snowflake": {
+    "normalized": "snowflake",
+    "categories": [],
+    "frequency": 12027
+  },
+  "Webpack": {
+    "normalized": "webpack",
+    "categories": [],
+    "frequency": 12026
+  },
+  "Six Sigma": {
+    "normalized": "six sigma",
+    "categories": [],
+    "frequency": 11991
+  },
+  "SEO": {
+    "normalized": "seo",
+    "categories": [],
+    "frequency": 11990
+  },
+  "SAP": {
+    "normalized": "sap",
+    "categories": [],
+    "frequency": 11989
+  },
+  "GCP": {
+    "normalized": "gcp",
+    "categories": [],
+    "frequency": 11983
+  },
+  "PostgreSQL": {
+    "normalized": "postgresql",
+    "categories": [],
+    "frequency": 11983
+  },
+  "Rust": {
+    "normalized": "rust",
+    "categories": [],
+    "frequency": 11960
+  },
+  "Apache Flink": {
+    "normalized": "apache flink",
+    "categories": [],
+    "frequency": 11958
+  },
+  "gRPC": {
+    "normalized": "grpc",
+    "categories": [],
+    "frequency": 11957
+  },
+  "Content Writing": {
+    "normalized": "content writing",
+    "categories": [],
+    "frequency": 11948
+  },
+  "SQL": {
+    "normalized": "sql",
+    "categories": [],
+    "frequency": 11935
+  },
+  "Hadoop": {
+    "normalized": "hadoop",
+    "categories": [],
+    "frequency": 11931
+  },
+  "Redis": {
+    "normalized": "redis",
+    "categories": [],
+    "frequency": 11928
+  },
+  "Tailwind": {
+    "normalized": "tailwind",
+    "categories": [],
+    "frequency": 11917
+  },
+  "Photoshop": {
+    "normalized": "photoshop",
+    "categories": [],
+    "frequency": 11917
+  },
+  "FastAPI": {
+    "normalized": "fastapi",
+    "categories": [],
+    "frequency": 11917
+  },
+  "Microservices": {
+    "normalized": "microservices",
+    "categories": [
+      "distributed_systems"
+    ],
+    "frequency": 11909
+  },
+  "PowerPoint": {
+    "normalized": "powerpoint",
+    "categories": [],
+    "frequency": 11908
+  },
+  "Spring Boot": {
+    "normalized": "spring boot",
+    "categories": [],
+    "frequency": 11906
+  },
+  "Data Pipelines": {
+    "normalized": "data pipelines",
+    "categories": [],
+    "frequency": 11905
+  },
+  "Django": {
+    "normalized": "django",
+    "categories": [],
+    "frequency": 11899
+  },
+  "MongoDB": {
+    "normalized": "mongodb",
+    "categories": [],
+    "frequency": 11841
+  },
+  "Node.js": {
+    "normalized": "node.js",
+    "categories": [],
+    "frequency": 11838
+  },
+  "Azure": {
+    "normalized": "azure",
+    "categories": [],
+    "frequency": 11828
+  },
+  "React": {
+    "normalized": "react",
+    "categories": [],
+    "frequency": 11811
+  },
+  "Hugging Face Transformers": {
+    "normalized": "hugging face transformers",
+    "categories": [],
+    "frequency": 5163
+  },
+  "LangChain": {
+    "normalized": "langchain",
+    "categories": [],
+    "frequency": 5162
+  },
+  "Information Retrieval": {
+    "normalized": "information retrieval",
+    "categories": [],
+    "frequency": 5135
+  },
+  "LLMs": {
+    "normalized": "llms",
+    "categories": [],
+    "frequency": 5094
+  },
+  "Recommendation Systems": {
+    "normalized": "recommendation systems",
+    "categories": [],
+    "frequency": 5091
+  },
+  "Semantic Search": {
+    "normalized": "semantic search",
+    "categories": [
+      "embeddings_retrieval"
+    ],
+    "frequency": 5087
+  },
+  "Sentence Transformers": {
+    "normalized": "sentence transformers",
+    "categories": [
+      "embeddings_retrieval"
+    ],
+    "frequency": 5081
+  },
+  "Embeddings": {
+    "normalized": "embeddings",
+    "categories": [
+      "embeddings_retrieval"
+    ],
+    "frequency": 5080
+  },
+  "Vector Search": {
+    "normalized": "vector search",
+    "categories": [],
+    "frequency": 5065
+  },
+  "Prompt Engineering": {
+    "normalized": "prompt engineering",
+    "categories": [],
+    "frequency": 5062
+  },
+  "Pinecone": {
+    "normalized": "pinecone",
+    "categories": [
+      "vector_db_hybrid_search"
+    ],
+    "frequency": 5062
+  },
+  "FAISS": {
+    "normalized": "faiss",
+    "categories": [
+      "vector_db_hybrid_search"
+    ],
+    "frequency": 5052
+  },
+  "RAG": {
+    "normalized": "rag",
+    "categories": [
+      "embeddings_retrieval"
+    ],
+    "frequency": 4995
+  },
+  "Fine-tuning LLMs": {
+    "normalized": "fine-tuning llms",
+    "categories": [
+      "llm_finetuning"
+    ],
+    "frequency": 4920
+  },
+  "YOLO": {
+    "normalized": "yolo",
+    "categories": [],
+    "frequency": 4827
+  },
+  "GANs": {
+    "normalized": "gans",
+    "categories": [],
+    "frequency": 4815
+  },
+  "Feature Engineering": {
+    "normalized": "feature engineering",
+    "categories": [],
+    "frequency": 4809
+  },
+  "OpenCV": {
+    "normalized": "opencv",
+    "categories": [],
+    "frequency": 4803
+  },
+  "ASR": {
+    "normalized": "asr",
+    "categories": [],
+    "frequency": 4788
+  },
+  "Image Classification": {
+    "normalized": "image classification",
+    "categories": [],
+    "frequency": 4761
+  },
+  "Computer Vision": {
+    "normalized": "computer vision",
+    "categories": [],
+    "frequency": 4755
+  },
+  "Speech Recognition": {
+    "normalized": "speech recognition",
+    "categories": [],
+    "frequency": 4744
+  },
+  "CNN": {
+    "normalized": "cnn",
+    "categories": [],
+    "frequency": 4740
+  },
+  "Kubeflow": {
+    "normalized": "kubeflow",
+    "categories": [],
+    "frequency": 4730
+  },
+  "MLOps": {
+    "normalized": "mlops",
+    "categories": [],
+    "frequency": 4727
+  },
+  "BentoML": {
+    "normalized": "bentoml",
+    "categories": [],
+    "frequency": 4726
+  },
+  "Data Science": {
+    "normalized": "data science",
+    "categories": [],
+    "frequency": 4708
+  },
+  "Reinforcement Learning": {
+    "normalized": "reinforcement learning",
+    "categories": [],
+    "frequency": 4708
+  },
+  "Object Detection": {
+    "normalized": "object detection",
+    "categories": [],
+    "frequency": 4705
+  },
+  "Diffusion Models": {
+    "normalized": "diffusion models",
+    "categories": [],
+    "frequency": 4701
+  },
+  "MLflow": {
+    "normalized": "mlflow",
+    "categories": [],
+    "frequency": 4691
+  },
+  "Time Series": {
+    "normalized": "time series",
+    "categories": [],
+    "frequency": 4686
+  },
+  "Weights & Biases": {
+    "normalized": "weights & biases",
+    "categories": [],
+    "frequency": 4685
+  },
+  "Forecasting": {
+    "normalized": "forecasting",
+    "categories": [],
+    "frequency": 4676
+  },
+  "TTS": {
+    "normalized": "tts",
+    "categories": [],
+    "frequency": 4669
+  },
+  "Statistical Modeling": {
+    "normalized": "statistical modeling",
+    "categories": [],
+    "frequency": 4634
+  },
+  "QLoRA": {
+    "normalized": "qlora",
+    "categories": [
+      "llm_finetuning"
+    ],
+    "frequency": 1401
+  },
+  "pgvector": {
+    "normalized": "pgvector",
+    "categories": [],
+    "frequency": 1394
+  },
+  "Weaviate": {
+    "normalized": "weaviate",
+    "categories": [
+      "vector_db_hybrid_search"
+    ],
+    "frequency": 1389
+  },
+  "Milvus": {
+    "normalized": "milvus",
+    "categories": [
+      "vector_db_hybrid_search"
+    ],
+    "frequency": 1384
+  },
+  "Learning to Rank": {
+    "normalized": "learning to rank",
+    "categories": [
+      "learning_to_rank",
+      "ranking_evaluation"
+    ],
+    "frequency": 1383
+  },
+  "BM25": {
+    "normalized": "bm25",
+    "categories": [],
+    "frequency": 1382
+  },
+  "TensorFlow": {
+    "normalized": "tensorflow",
+    "categories": [],
+    "frequency": 1381
+  },
+  "Qdrant": {
+    "normalized": "qdrant",
+    "categories": [
+      "vector_db_hybrid_search"
+    ],
+    "frequency": 1379
+  },
+  "Python": {
+    "normalized": "python",
+    "categories": [
+      "python"
+    ],
+    "frequency": 1378
+  },
+  "PyTorch": {
+    "normalized": "pytorch",
+    "categories": [],
+    "frequency": 1378
+  },
+  "PEFT": {
+    "normalized": "peft",
+    "categories": [
+      "llm_finetuning"
+    ],
+    "frequency": 1377
+  },
+  "LoRA": {
+    "normalized": "lora",
+    "categories": [
+      "llm_finetuning"
+    ],
+    "frequency": 1371
+  },
+  "NLP": {
+    "normalized": "nlp",
+    "categories": [],
+    "frequency": 1358
+  },
+  "Machine Learning": {
+    "normalized": "machine learning",
+    "categories": [],
+    "frequency": 1349
+  },
+  "Deep Learning": {
+    "normalized": "deep learning",
+    "categories": [],
+    "frequency": 1342
+  },
+  "Haystack": {
+    "normalized": "haystack",
+    "categories": [],
+    "frequency": 1333
+  },
+  "Elasticsearch": {
+    "normalized": "elasticsearch",
+    "categories": [
+      "vector_db_hybrid_search"
+    ],
+    "frequency": 1311
+  },
+  "LlamaIndex": {
+    "normalized": "llamaindex",
+    "categories": [],
+    "frequency": 1308
+  },
+  "scikit-learn": {
+    "normalized": "scikit-learn",
+    "categories": [],
+    "frequency": 1288
+  },
+  "OpenSearch": {
+    "normalized": "opensearch",
+    "categories": [
+      "vector_db_hybrid_search"
+    ],
+    "frequency": 1286
+  },
+  "Information Retrieval Systems": {
+    "normalized": "information retrieval systems",
+    "categories": [],
+    "frequency": 7
+  },
+  "Search Backend": {
+    "normalized": "search backend",
+    "categories": [],
+    "frequency": 5
+  },
+  "Text Encoders": {
+    "normalized": "text encoders",
+    "categories": [],
+    "frequency": 5
+  },
+  "Vector Representations": {
+    "normalized": "vector representations",
+    "categories": [],
+    "frequency": 4
+  },
+  "Content Matching": {
+    "normalized": "content matching",
+    "categories": [],
+    "frequency": 4
+  },
+  "Model Adaptation": {
+    "normalized": "model adaptation",
+    "categories": [],
+    "frequency": 4
+  },
+  "Ranking Systems": {
+    "normalized": "ranking systems",
+    "categories": [],
+    "frequency": 4
+  },
+  "Search & Discovery": {
+    "normalized": "search & discovery",
+    "categories": [],
+    "frequency": 4
+  },
+  "Workflow Orchestration": {
+    "normalized": "workflow orchestration",
+    "categories": [],
+    "frequency": 3
+  },
+  "Search Infrastructure": {
+    "normalized": "search infrastructure",
+    "categories": [],
+    "frequency": 3
+  },
+  "Indexing Algorithms": {
+    "normalized": "indexing algorithms",
+    "categories": [],
+    "frequency": 3
+  },
+  "Open-source ML libraries": {
+    "normalized": "open-source ml libraries",
+    "categories": [],
+    "frequency": 3
+  },
+  "Natural Language Processing": {
+    "normalized": "natural language processing",
+    "categories": [],
+    "frequency": 2
+  },
+  "Document Processing": {
+    "normalized": "document processing",
+    "categories": [],
+    "frequency": 1
+  }
+}

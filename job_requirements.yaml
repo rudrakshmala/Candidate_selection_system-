@@ -1,0 +1,347 @@
+# ============================================================
+# job_requirements.yaml  — Stage A, hand-encoded from JD
+# Source: job_description.docx  (Senior AI Engineer — Redrob AI)
+# DO NOT auto-generate or overwrite; every field is human-reviewed.
+# ============================================================
+
+# ── MUST-HAVE CATEGORIES ─────────────────────────────────────
+must_have_categories:
+
+  embeddings_retrieval:
+    weight: 0.30          # highest: explicitly called "thing you absolutely need"
+    keywords:
+      - sentence-transformers
+      - sentence transformers
+      - openai embeddings
+      - bge
+      - bge-small
+      - bge-large
+      - e5
+      - e5-small
+      - e5-large
+      - embeddings
+      - dense retrieval
+      - bi-encoder
+      - cross-encoder
+      - embedding drift
+      - retrieval quality
+      - semantic search
+      - vector embeddings
+      - text embeddings
+      - rag
+      - retrieval-augmented generation
+    evidence_phrases:     # career_history description scan
+      - embedding
+      - retrieval
+      - semantic search
+      - dense vector
+      - bi-encoder
+
+  vector_db_hybrid_search:
+    weight: 0.25
+    keywords:
+      - pinecone
+      - weaviate
+      - qdrant
+      - milvus
+      - opensearch
+      - open search
+      - elasticsearch
+      - elastic search
+      - faiss
+      - annoy
+      - scann
+      - vector database
+      - vector db
+      - vector store
+      - hybrid search
+      - approximate nearest neighbor
+      - ann
+      - hnsw
+    evidence_phrases:
+      - vector search
+      - hybrid search
+      - vector index
+      - approximate nearest neighbor
+      - vector store
+
+  python:
+    weight: 0.20          # "Strong Python. Yes really, we care about code quality."
+    keywords:
+      - python
+      - python3
+    evidence_phrases:
+      - python
+
+  ranking_evaluation:
+    weight: 0.25
+    keywords:
+      - ndcg
+      - mrr
+      - mean reciprocal rank
+      - map
+      - mean average precision
+      - a/b testing
+      - ab testing
+      - a/b test
+      - offline evaluation
+      - online evaluation
+      - ranking evaluation
+      - evaluation framework
+      - offline-to-online
+      - retrieval evaluation
+      - precision@k
+      - recall@k
+      - learning to rank
+    evidence_phrases:
+      - ranking
+      - evaluation
+      - a/b test
+      - offline eval
+      - ndcg
+      - mrr
+
+# ── NICE-TO-HAVE CATEGORIES ──────────────────────────────────
+nice_to_have_categories:
+
+  llm_finetuning:
+    weight: 0.20
+    keywords:
+      - lora
+      - qlora
+      - peft
+      - fine-tuning
+      - fine tuning
+      - finetuning
+      - instruction tuning
+      - sft
+      - rlhf
+      - dpo
+      - adapter
+      - llm fine-tuning
+    evidence_phrases:
+      - fine-tun
+      - lora
+      - qlora
+
+  learning_to_rank:
+    weight: 0.20
+    keywords:
+      - xgboost
+      - lightgbm
+      - learning to rank
+      - ltr
+      - lambdarank
+      - ranknet
+      - listwise
+      - pairwise ranking
+      - gradient boosting
+    evidence_phrases:
+      - learning to rank
+      - xgboost
+      - lightgbm
+
+  hr_tech:
+    weight: 0.15
+    keywords:
+      - hr tech
+      - hrtech
+      - recruiting
+      - talent acquisition
+      - talent intelligence
+      - ats
+      - applicant tracking
+      - marketplace
+      - job matching
+      - candidate ranking
+    evidence_phrases:
+      - recruiting
+      - talent
+      - marketplace
+
+  distributed_systems:
+    weight: 0.15
+    keywords:
+      - distributed systems
+      - kubernetes
+      - k8s
+      - large-scale
+      - high throughput
+      - spark
+      - kafka
+      - ray
+      - celery
+      - microservices
+      - large scale inference
+      - model serving
+      - triton
+      - torchserve
+    evidence_phrases:
+      - distributed
+      - large scale
+      - kubernetes
+      - kafka
+      - spark
+
+  open_source:
+    weight: 0.10
+    keywords:
+      - open source
+      - github
+      - open-source contribution
+      - oss
+    evidence_phrases:
+      - open source
+      - contributed to
+      - maintainer
+
+# ── DISQUALIFIERS ─────────────────────────────────────────────
+disqualifiers:
+
+  pure_consulting_firms:
+    # Hard disqualifier ONLY if entire career is here; one role is fine
+    companies:
+      - tcs
+      - tata consultancy
+      - infosys
+      - wipro
+      - accenture
+      - cognizant
+      - capgemini
+      - tech mahindra
+      - techmahindra
+      - hexaware
+      - mphasis
+    penalty_entire_career: 0.0    # hard zero if ALL roles are at these firms
+    penalty_current_only: 0.75    # penalty if only current role, prior product exp OK
+
+  pure_research_only:
+    # detect via career_history descriptions having only academic/paper language
+    research_phrases:
+      - "published paper"
+      - "research paper"
+      - "academic research"
+      - "arxiv"
+      - "research lab"
+      - "phd research"
+      - "thesis"
+      - "research intern"
+    production_phrases:
+      - deployed
+      - production
+      - shipped
+      - launched
+      - served
+      - real users
+      - at scale
+    # If ALL career descriptions have research_phrases and NONE have production_phrases → flag
+    penalty: 0.05   # near-zero
+
+  langchain_only:
+    # <12 mo total experience that is entirely framework-calling-api language
+    keywords:
+      - langchain
+      - llamaindex
+      - llama-index
+      - llama index
+      - openai api
+      - chatgpt api
+    # Used alongside very short YOE with no pre-LLM ML background
+    max_yoe_for_flag: 2.0
+    penalty: 0.15
+
+  no_code_senior:
+    # Senior+ title, role descriptions read as "architecture" not "coding"
+    senior_title_words:
+      - senior
+      - staff
+      - principal
+      - director
+      - vp
+      - head of
+      - chief
+    architecture_only_phrases:
+      - "defined architecture"
+      - "led the team"
+      - "managed engineers"
+      - "roadmap"
+      - "stakeholder"
+    # Combined with no hands-on terms in last 2 roles → flag
+    penalty: 0.50
+
+  title_chaser:
+    # Escalating senior titles, median tenure < threshold
+    seniority_words_ordered:
+      - junior
+      - associate
+      - mid
+      - senior
+      - staff
+      - principal
+      - director
+    short_tenure_months: 16   # median tenure below this triggers flag
+    penalty: 0.60
+
+  cv_speech_robotics_only:
+    domain_phrases:
+      - computer vision
+      - object detection
+      - image segmentation
+      - speech recognition
+      - asr
+      - tts
+      - text to speech
+      - robotics
+      - ros
+      - slam
+    nlp_ir_phrases:
+      - nlp
+      - natural language
+      - text
+      - ranking
+      - retrieval
+      - search
+      - recommendation
+      - information retrieval
+    penalty: 0.40  # if ONLY cv/speech/robotics, no NLP/IR anywhere
+
+  closed_source_only_5yr:
+    # 5+ years with no OSS, papers, talks
+    penalty: 0.60
+
+# ── EXPERIENCE BAND ───────────────────────────────────────────
+experience_band:
+  min: 5
+  max: 9
+  hard_cutoff: false     # JD explicitly says "outside band OK with strong signals"
+  # Score peak at 6-8, graceful decay outside band
+
+# ── NOTICE PERIOD ─────────────────────────────────────────────
+notice_period:
+  ideal_max_days: 30
+  soft_penalty_beyond: true     # graded, NOT a cliff
+  # 0-30d: multiplier=1.0
+  # 31-60d: multiplier=0.90
+  # 61-90d: multiplier=0.78
+  # 91+d:   multiplier=0.65
+
+# ── LOCATION ──────────────────────────────────────────────────
+location:
+  score_10:   [pune, noida]
+  score_085:  [hyderabad, mumbai, delhi, delhi ncr, gurugram, gurgaon, bengaluru, bangalore, new delhi]
+  score_065:  []   # other india cities (catch-all)
+  score_045:  []   # outside india
+  relocation_boost: 0.10   # added if willing_to_relocate=true
+
+# ── FINAL SCORE WEIGHTS ───────────────────────────────────────
+score_weights:
+  skill_evidence:    0.35
+  domain_fit:        0.30
+  trajectory:        0.15
+  embedding_sim:     0.10   # set to 0.0 if embeddings not computed
+  location_fit:      0.10
+
+# ── BEHAVIORAL MULTIPLIER RANGE ───────────────────────────────
+behavioral_multiplier:
+  min: 0.30    # never zero out a strong fit entirely
+  max: 1.00

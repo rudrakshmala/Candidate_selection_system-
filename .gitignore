@@ -1,0 +1,15 @@
+data/
+artifacts/*.npy
+artifacts/*.parquet
+artifacts/*.txt
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.DS_Store
+submission*.csv
