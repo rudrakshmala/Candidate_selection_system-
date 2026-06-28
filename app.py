@@ -5,6 +5,7 @@ Run with: python app.py
 
 import sys
 import os
+import tempfile
 from pathlib import Path
 
 import pandas as pd
@@ -50,7 +51,7 @@ def live_rankings(w_skill, w_domain, w_traj, w_loc, top_n,
     try:
         df = get_df().copy()
     except Exception as e:
-        return pd.DataFrame({"error": [str(e)]}), f"❌ {e}"
+        return pd.DataFrame({"error": [str(e)]}), f"❌ {e}", None
 
     df["score"] = compute_scores(df, w_skill, w_domain, w_traj, w_loc)
 
@@ -81,7 +82,16 @@ def live_rankings(w_skill, w_domain, w_traj, w_loc, top_n,
         f"**Consulting Disq.:** {int(raw['is_pure_consulting'].sum()):,} | "
         f"**Showing top {int(top_n)}**"
     )
-    return result, summary
+
+    # Write Excel-friendly CSV (UTF-8 BOM so Excel auto-detects encoding)
+    tmp = tempfile.NamedTemporaryFile(
+        delete=False, suffix="_ranked_candidates.csv",
+        prefix="redrob_top", mode="w", encoding="utf-8-sig"
+    )
+    result.to_csv(tmp.name, index=False)
+    tmp.close()
+
+    return result, summary, tmp.name
 
 
 def kpi_summary():
@@ -171,14 +181,22 @@ def get_flagged():
 
 def submission_preview():
     if not os.path.exists("submission.csv"):
-        return pd.DataFrame({"note": ["Run python src/rank.py to generate submission.csv"]}), "⚠️ No submission.csv found."
+        return pd.DataFrame({"note": ["Run python src/rank.py to generate submission.csv"]}), None, "⚠️ No submission.csv found."
     sub = pd.read_csv("submission.csv")
     info = (
         f"✅ **submission.csv** — {len(sub)} rows | "
         f"Top score: **{sub['score'].max():.4f}** | "
         f"Bottom score: **{sub['score'].min():.4f}**"
     )
-    return sub, info
+    # Write UTF-8 BOM CSV so Excel opens it without encoding issues
+    tmp = tempfile.NamedTemporaryFile(
+        delete=False, suffix="_submission.csv",
+        prefix="redrob_submission", mode="w", encoding="utf-8-sig"
+    )
+    sub.to_csv(tmp.name, index=False)
+    tmp.close()
+    return sub, tmp.name, info
+
 
 
 def upload_and_rank(file_obj):
@@ -242,12 +260,16 @@ with gr.Blocks(title="Candidate Ranking Dashboard") as demo:
             with gr.Column(scale=4):
                 rank_summary = gr.Markdown(value="*Click **Recompute Rankings** to load.*")
                 rank_table   = gr.Dataframe(interactive=False, wrap=False, label="Top Candidates")
+                rank_download = gr.File(
+                    label="⬇️ Download Ranked Results as CSV (Excel-ready)",
+                    visible=True
+                )
 
         rank_btn.click(
             fn=live_rankings,
             inputs=[w_skill, w_domain, w_traj, w_loc, top_n,
                     title_filter, show_honeypots, show_consulting],
-            outputs=[rank_table, rank_summary]
+            outputs=[rank_table, rank_summary, rank_download]
         )
 
     # ── Tab 2: KPI Summary ────────────────────────────────────────────────────
@@ -282,7 +304,13 @@ with gr.Blocks(title="Candidate Ranking Dashboard") as demo:
         sub_btn   = gr.Button("🔄 Load submission.csv", variant="primary")
         sub_info  = gr.Markdown()
         sub_table = gr.Dataframe(interactive=False, wrap=True, label="Submission")
-        sub_btn.click(fn=submission_preview, inputs=[], outputs=[sub_table, sub_info])
+        sub_file  = gr.File(label="⬇️ Download submission.csv (Excel-ready)")
+        sub_btn.click(
+            fn=submission_preview,
+            inputs=[],
+            outputs=[sub_table, sub_file, sub_info]
+        )
+
 
     # ── Tab 5: Upload & Re-rank ───────────────────────────────────────────────
     with gr.Tab("📤 Upload & Re-rank"):
